@@ -48,6 +48,27 @@ Current build status
                 </a>
               </td>
             </tr><tr>
+              <td>linux_aarch64_nodejs14</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=18074&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/pnpm-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_nodejs14" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_aarch64_nodejs16</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=18074&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/pnpm-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_nodejs16" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_aarch64_nodejs18</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=18074&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/pnpm-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_nodejs18" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
               <td>osx_64_nodejs14</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=18074&branchName=main">
@@ -66,6 +87,20 @@ Current build status
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=18074&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/pnpm-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_nodejs18" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_nodejs16</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=18074&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/pnpm-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_nodejs16" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_nodejs18</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=18074&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/pnpm-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_nodejs18" alt="variant">
                 </a>
               </td>
             </tr><tr>
