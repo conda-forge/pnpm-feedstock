@@ -15,4 +15,4 @@ NPM_CONFIG_USERCONFIG=/tmp/nonexistentrc
 
 npm install -g ${PKG_NAME}@${PKG_VERSION}
 
-pnpm-licenses generate-disclaimer --prod > ThirdPartyLicenses.txt
+npx @quantco/pnpm-licenses generate-disclaimer --prod --filter='["@pnpm/*"]' --output-file=ThirdPartyLicenses.txt

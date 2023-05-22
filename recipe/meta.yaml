@@ -19,7 +19,7 @@ requirements:
     - nodejs
   host:
     - nodejs
-    - pnpm-licenses
+    # - pnpm-licenses
   run:
     - nodejs
 
