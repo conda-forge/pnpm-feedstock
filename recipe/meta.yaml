@@ -19,6 +19,8 @@ requirements:
     - nodejs
   host:
     - nodejs
+    # yarn is needed for some dependencies of pnpm
+    - yarn
     # - pnpm-licenses
   run:
     - nodejs
