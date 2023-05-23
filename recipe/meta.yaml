@@ -19,9 +19,6 @@ requirements:
     - nodejs
   host:
     - nodejs
-    # yarn is needed for some dependencies of pnpm
-    - yarn 1.*
-    # - pnpm-licenses
   run:
     - nodejs
 
@@ -41,3 +38,4 @@ extra:
   recipe-maintainers:
     - xhochy
     - pavelzw
+    - JannikWibkerQC
