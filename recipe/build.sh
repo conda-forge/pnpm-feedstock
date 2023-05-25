@@ -21,8 +21,8 @@ npm install -g ${PKG_NAME}@${PKG_VERSION}
 # we thus need to use npx pnpm@latest in a few places
 
 # there are 2 dependencies which have patches applied by pnpm, this breaks `pnpm licenses list`, thus we remove the patches
-npx pnpm@latest patch-remove pkg@5.7.0
-npx pnpm@latest patch-remove graceful-fs@4.2.11
+CI=0 npx pnpm@latest patch-remove pkg@5.7.0
+CI=0 npx pnpm@latest patch-remove graceful-fs@4.2.11
 npx pnpm@latest install
 
 # generate the thirdPartyLicenses file using @quantco/pnpm-licenses
