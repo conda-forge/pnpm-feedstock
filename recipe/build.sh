@@ -24,14 +24,9 @@ NPM_CONFIG_USERCONFIG=/tmp/nonexistentrc
 npm install -g ${PKG_NAME}@${PKG_VERSION}
 
 # pnpm uses pnpm as its package manager, which is kind of awkward to deal with sometimes
-# this partially mirrors the release.yml workflow in the pnpm repo where they use [corepack](https://nodejs.org/api/corepack.html)
-# to install pnpm and then use pnpm to install all dependencies of pnpm to build pnpm from source
 
 # as pnpm is quite a complex project there is one oddity we need to take care before we can do a
 # `pnpm install` and generate our thirdPartyLicenses.txt file
-
-corepack enable
-corepack prepare pnpm@next-8 --activate
 
 # we need to remove two patches that get applied on top of two dependencies, as this breaks the `pnpm licenses list` command
 # we also need to remove the whole `pnpm/artifacts/exe` folder as it contains one of these patched dependencies which leads
@@ -51,9 +46,6 @@ fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2) + '\n')
 EOF
 
 pnpm install
-
-# disable corepack in the hope that it (and the pnpm version it installed) doesn't end up in the final conda package
-corepack disable
 
 # generate the thirdPartyLicenses file using @quantco/pnpm-licenses
 npx pnpm@latest licenses list --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input --filter='["@pnpm/*"]' --output-file=ThirdPartyLicenses.txt
