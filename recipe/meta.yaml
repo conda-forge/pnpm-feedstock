@@ -16,7 +16,7 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }}
+    - {{ compiler('c') }}
     - make
     - nodejs
   host:
