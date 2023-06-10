@@ -1,5 +1,5 @@
 {% set name = "pnpm" %}
-{% set version = "7.28.0" %}
+{% set version = "8.6.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,17 +7,21 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 0f336ba9c46e596044449a826b21d75123a07121cda50d1bf382f835d11d96d2
+  sha256: e28d1cf75a172e40c7ff7031dd72cec0c7fc0908a2ca3b9f50b56cd7708d2083
 
 build:
+  # https://github.com/conda-forge/pnpm-feedstock/issues/31
+  skip: true  # [win]
   number: 0
 
 requirements:
   build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - make
     - nodejs
   host:
     - nodejs
-    - yarn
   run:
     - nodejs
 
@@ -37,3 +41,4 @@ extra:
   recipe-maintainers:
     - xhochy
     - pavelzw
+    - JannikWibkerQC
