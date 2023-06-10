@@ -16,12 +16,13 @@ build:
 
 requirements:
   build:
+    - {{ compiler('c') }}
     - make
-    - nodejs >=16
+    - nodejs
   host:
-    - nodejs >=16
+    - nodejs
   run:
-    - nodejs >=16
+    - nodejs
 
 test:
   commands:
