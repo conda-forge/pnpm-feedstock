@@ -12,7 +12,7 @@ source:
 build:
   # https://github.com/conda-forge/pnpm-feedstock/issues/31
   skip: true  # [win]
-  number: 0
+  number: 1
 
 requirements:
   build:
