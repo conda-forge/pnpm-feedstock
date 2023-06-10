@@ -1,5 +1,5 @@
 {% set name = "pnpm" %}
-{% set version = "8.4.0" %}
+{% set version = "8.6.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: f5fd88b74707645f2612b327f1b71904ad711bb9b6073f183d346b18c4a3802a
+  sha256: e28d1cf75a172e40c7ff7031dd72cec0c7fc0908a2ca3b9f50b56cd7708d2083
 
 build:
   # https://github.com/conda-forge/pnpm-feedstock/issues/31
