@@ -16,6 +16,7 @@ build:
 
 requirements:
   build:
+    - make
     - nodejs >=16
   host:
     - nodejs >=16
