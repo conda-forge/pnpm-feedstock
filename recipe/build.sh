@@ -38,13 +38,7 @@ rm pnpm-lock.yaml
 rm -rf pnpm/artifacts/exe
 
 # get rid of the patchedDependencies entry in the root package.json
-node - << EOF
-const fs = require('fs')
-const packageJson = require('./package.json')
-delete packageJson.pnpm.patchedDependencies
-delete packageJson.scripts.prepare
-fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2) + '\n')
-EOF
+node $RECIPE_DIR/deletePatchedDependencies.js
 
 pnpm install
 

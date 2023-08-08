@@ -17,5 +17,13 @@ for %%c in (pnpm) do (
 )
 popd
 
+rmdir pnpm\artifacts\exe /s /q
+if errorlevel 1 exit 1
+del pnpm-lock.yaml
+if errorlevel 1 exit 1
+node %RECIPE_DIR%\deletePatchedDependencies.js
+if errorlevel 1 exit 1
 pnpm install
+if errorlevel 1 exit 1
+npx pnpm@latest licenses list --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input --filter='["@pnpm/*"]' --output-file=ThirdPartyLicenses.txt
 if errorlevel 1 exit 1
