@@ -23,7 +23,7 @@ del pnpm-lock.yaml
 if errorlevel 1 exit 1
 node %RECIPE_DIR%\deletePatchedDependencies.js
 if errorlevel 1 exit 1
-pnpm install
+pnpm install --prod
 if errorlevel 1 exit 1
 npx pnpm@latest licenses list --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input --filter='["@pnpm/*"]' --output-file=ThirdPartyLicenses.txt
 if errorlevel 1 exit 1
