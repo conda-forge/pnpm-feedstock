@@ -10,5 +10,3 @@ conda_forge_output_validation: true
 conda_build:
   pkg_format: '2'
 test: native
-azure:
-  store_build_artifacts: true
