@@ -1,8 +1,5 @@
 @echo on
 
-@rem call yarn licenses generate-disclaimer --prod > ThirdPartyLicenses.txt
-@rem if errorlevel 1 exit 1
-
 md %LIBRARY_PREFIX%\share\pnpm
 pushd %LIBRARY_PREFIX%\share\pnpm
 md node_modules
@@ -25,6 +22,5 @@ node %RECIPE_DIR%\deletePatchedDependencies.js
 if errorlevel 1 exit 1
 cmd /c "pnpm install --prod"
 if errorlevel 1 exit 1
-@echo on
 npx pnpm@latest licenses list --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input "--filter=["""@pnpm/*"""]" --output-file=ThirdPartyLicenses.txt
 if errorlevel 1 exit 1
