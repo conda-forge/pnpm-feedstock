@@ -10,9 +10,7 @@ source:
   sha256: d5c93f060c13e28cc9c861d7d8db4dfe2a306cab23c7b51a0eb3061fbe5e2488
 
 build:
-  # https://github.com/conda-forge/pnpm-feedstock/issues/31
-  skip: true  # [win]
-  number: 0
+  number: 1
 
 requirements:
   build:
