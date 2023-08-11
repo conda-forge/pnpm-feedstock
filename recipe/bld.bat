@@ -9,7 +9,7 @@ popd
 
 pushd %LIBRARY_PREFIX%\bin
 for %%c in (pnpm) do (
-  echo @echo on >> %%c.bat
+  echo @echo off >> %%c.bat
   echo "%LIBRARY_PREFIX%\share\pnpm\node_modules\.bin\%%c.cmd" %%* >> %%c.bat
 )
 popd
