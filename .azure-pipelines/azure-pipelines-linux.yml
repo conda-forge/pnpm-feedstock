@@ -24,7 +24,6 @@ jobs:
         CONFIG: linux_aarch64_nodejs20
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-  swapfile_size: 0GiB
   timeoutInMinutes: 360
 
   steps:
