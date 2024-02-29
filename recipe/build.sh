@@ -40,7 +40,7 @@ rm -rf pnpm/artifacts/exe
 # get rid of the patchedDependencies entry in the root package.json
 node $RECIPE_DIR/deletePatchedDependencies.js
 
-pnpm install
+npx pnpm@9.0.0-alpha.5 install
 
 # generate the thirdPartyLicenses file using @quantco/pnpm-licenses
-npx pnpm@latest licenses list --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input --filter='["@pnpm/*"]' --output-file=ThirdPartyLicenses.txt
+npx pnpm@9.0.0-alpha.5 licenses list --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input --filter='["@pnpm/*"]' --output-file=ThirdPartyLicenses.txt
