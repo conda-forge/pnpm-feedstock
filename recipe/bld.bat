@@ -22,9 +22,9 @@ node %RECIPE_DIR%\deletePatchedDependencies.js
 if errorlevel 1 exit 1
 
 @echo "## Installing prod dependencies"
-cmd /c npx pnpm@9.0.0-alpha.5 install --prod
+cmd /c npx pnpm@%PKG_VERSION% install --prod
 if errorlevel 1 exit 1
 
 @echo "## Generating ThirdPartyLicenses.txt"
-cmd /c npx pnpm@9.0.0-alpha.5 licenses list --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input "--filter=["""@pnpm/*"""]" --output-file=ThirdPartyLicenses.txt
+cmd /c npx pnpm@%PKG_VERSION% licenses list --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input "--filter=["""@pnpm/*"""]" --output-file=ThirdPartyLicenses.txt
 if errorlevel 1 exit 1
