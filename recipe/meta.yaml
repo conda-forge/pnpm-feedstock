@@ -1,5 +1,5 @@
 {% set name = "pnpm" %}
-{% set version = "10.4.1" %}
+{% set version = "10.5.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 80d408c605123eabc9d5fdcd2d796bcbc43109623aaa523a02e46a141a0f319a
+  sha256: e0cca14289c058911a1ae7d552e7f7e583600181025683f57cd98504fe8661e4
 
 build:
   number: 0
