@@ -1,12 +1,15 @@
-{% set name = "pnpm" %}
-{% set version = "10.13.1" %}
+schema_version: 1
+
+context:
+  name: pnpm
+  version: 10.13.1
 
 package:
-  name: {{ name|lower }}
-  version: {{ version }}
+  name: ${{ name|lower }}
+  version: ${{ version }}
 
 source:
-  url: https://github.com/{{ name }}/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+  url: https://github.com/${{ name }}/${{ name }}/archive/refs/tags/v${{ version }}.tar.gz
   sha256: 722960e76b9e82d45118196ff64973f0b6345359142657222ebd168e087ff2a0
 
 build:
@@ -14,9 +17,9 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }}
-    - {{ stdlib("c") }}
-    - {{ compiler('cxx') }}
+    - ${{ compiler('c') }}
+    - ${{ stdlib("c") }}
+    - ${{ compiler('cxx') }}
     - make
     - nodejs
   host:
@@ -24,20 +27,21 @@ requirements:
   run:
     - nodejs
 
-test:
-  commands:
-    - pnpm --help
+tests:
+  - script:
+      - pnpm --help
 
 about:
-  home: https://github.com/pnpm/pnpm
   license: MIT
   license_file:
     - LICENSE
     - ThirdPartyLicenses.txt
   summary: 📦🚀 Fast, disk space efficient package manager
+  homepage: https://github.com/pnpm/pnpm
 
 extra:
   recipe-maintainers:
     - JaninaWibkerQC
     - xhochy
     - pavelzw
+
