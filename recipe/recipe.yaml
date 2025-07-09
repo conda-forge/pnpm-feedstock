@@ -22,6 +22,11 @@ requirements:
     - ${{ compiler('cxx') }}
     - make
     - nodejs
+    - if: win
+      then:
+        - m2-sed
+      else:
+        - sed
   host:
     - nodejs
   run:
@@ -44,4 +49,3 @@ extra:
     - JaninaWibkerQC
     - xhochy
     - pavelzw
-
