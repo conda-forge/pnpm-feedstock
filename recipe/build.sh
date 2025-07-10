@@ -36,6 +36,7 @@ npm install -g ${PKG_NAME}@${PKG_VERSION}
 
 rm pnpm-lock.yaml
 rm -rf pnpm/artifacts/exe
+sed -i '/^nodeVersion/d' pnpm-workspace.yaml
 
 # get rid of the patchedDependencies entry in the root package.json
 node $RECIPE_DIR/deletePatchedDependencies.js

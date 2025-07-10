@@ -1,0 +1,51 @@
+schema_version: 1
+
+context:
+  name: pnpm
+  version: 10.13.1
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/${{ name }}/${{ name }}/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: 722960e76b9e82d45118196ff64973f0b6345359142657222ebd168e087ff2a0
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ stdlib("c") }}
+    - ${{ compiler('cxx') }}
+    - make
+    - nodejs
+    - if: win
+      then:
+        - m2-sed
+      else:
+        - sed
+  host:
+    - nodejs
+  run:
+    - nodejs
+
+tests:
+  - script:
+      - pnpm --help
+
+about:
+  license: MIT
+  license_file:
+    - LICENSE
+    - ThirdPartyLicenses.txt
+  summary: 📦🚀 Fast, disk space efficient package manager
+  homepage: https://github.com/pnpm/pnpm
+
+extra:
+  recipe-maintainers:
+    - JaninaWibkerQC
+    - xhochy
+    - pavelzw
