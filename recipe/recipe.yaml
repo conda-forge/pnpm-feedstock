@@ -42,7 +42,11 @@ tests:
         - pnpx
         - pnx
       files:
-        - lib/node_modules/pnpm/*
+        - if: unix
+          then:
+            - lib/node_modules/pnpm/*
+          else:
+            - Library/share/pnpm/*
       strict: true
 
 about:
