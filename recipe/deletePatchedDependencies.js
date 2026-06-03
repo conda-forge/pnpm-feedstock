@@ -21,7 +21,12 @@ delete packageJson.scripts.prepare
 // cannot simply JSON.parse it and we don't want to deal with having a dependency
 // for parsing yaml around. The easiest solution to "delete" the patchedDependencies
 // entry is to simply rename it
-pnpmWorkspace = pnpmWorkspace.replace('patchedDependencies:', 'RENAMED_patchedDependencies:')
+// additionally we also need to disable the global virtual store as using this has
+// buggy behavior combined with `pnpm licenses list`. The command still outputs the
+// same paths, which do not exist when using `enableGlobalVirtualStore: true`.
+pnpmWorkspace = pnpmWorkspace
+  .replace('patchedDependencies:', 'RENAMED_patchedDependencies:')
+  .replace('enableGlobalVirtualStore: true', 'enableGlobalVirtualStore: false')
 
 fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2) + '\n')
 fs.writeFileSync('pnpm-workspace.yaml', pnpmWorkspace)
