@@ -8,23 +8,23 @@ jobs:
     vmImage: $(VMIMAGE)
   strategy:
     matrix:
-      osx_64_nodejs22:
-        CONFIG: osx_64_nodejs22
-        UPLOAD_PACKAGES: 'True'
-        VMIMAGE: macOS-15
-        store_build_artifacts: false
       osx_64_nodejs24:
         CONFIG: osx_64_nodejs24
         UPLOAD_PACKAGES: 'True'
         VMIMAGE: macOS-15
         store_build_artifacts: false
-      osx_arm64_nodejs22:
-        CONFIG: osx_arm64_nodejs22
+      osx_64_nodejs26:
+        CONFIG: osx_64_nodejs26
         UPLOAD_PACKAGES: 'True'
         VMIMAGE: macOS-15
         store_build_artifacts: false
       osx_arm64_nodejs24:
         CONFIG: osx_arm64_nodejs24
+        UPLOAD_PACKAGES: 'True'
+        VMIMAGE: macOS-15
+        store_build_artifacts: false
+      osx_arm64_nodejs26:
+        CONFIG: osx_arm64_nodejs26
         UPLOAD_PACKAGES: 'True'
         VMIMAGE: macOS-15
         store_build_artifacts: false
