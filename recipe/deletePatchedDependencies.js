@@ -8,6 +8,11 @@ let pnpmWorkspace = fs.readFileSync('./pnpm-workspace.yaml', 'utf-8')
 // the prod dependencies to then create a third-party-licenses file
 delete packageJson.packageManager
 
+// pnpm also declares its package manager via `devEngines.packageManager`, which
+// npm/npx enforces. Since we bootstrap the install with npm, this would fail with
+// EBADDEVENGINES ("Invalid name 'pnpm' does not match 'npm'"). Remove it as well.
+delete packageJson.devEngines
+
 // We don't want to run any custom commands upon installation
 delete packageJson.scripts.prepare
 

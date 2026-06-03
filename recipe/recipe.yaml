@@ -35,6 +35,15 @@ requirements:
 tests:
   - script:
       - pnpm --help
+  - package_contents:
+      bin:
+        - pn
+        - pnpm
+        - pnpx
+        - pnx
+      files:
+        - lib/node_modules/pnpm/*
+      strict: true
 
 about:
   license: MIT
