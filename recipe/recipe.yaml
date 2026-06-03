@@ -37,10 +37,12 @@ tests:
       - pnpm --help
   - package_contents:
       bin:
-        - pn
+        - if: unix
+          then:
+            - pn
+            - pnpx
+            - pnx
         - pnpm
-        - pnpx
-        - pnx
       files:
         - if: unix
           then:
