@@ -27,6 +27,8 @@ delete packageJson.scripts.prepare
 pnpmWorkspace = pnpmWorkspace
   .replace('patchedDependencies:', 'RENAMED_patchedDependencies:')
   .replace('enableGlobalVirtualStore: true', 'enableGlobalVirtualStore: false')
+  .replace('nodeVersion:', 'RENAMED_nodeVersion:')
+  .replace('allowBuilds:', 'RENAMED_allowBuilds:')
 
 fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2) + '\n')
 fs.writeFileSync('pnpm-workspace.yaml', pnpmWorkspace)
