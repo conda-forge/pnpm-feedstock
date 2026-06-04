@@ -44,4 +44,4 @@ node $RECIPE_DIR/deletePatchedDependencies.js
 npx pnpm@${PKG_VERSION} install
 
 # generate the thirdPartyLicenses file using @quantco/pnpm-licenses
-npx pnpm@${PKG_VERSION} licenses list --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input --filter='["@pnpm/*"]' --output-file=ThirdPartyLicenses.txt
+npx pnpm@${PKG_VERSION} licenses list --json --prod | npx @quantco/pnpm-licenses generate-disclaimer --json-input --filter='["@pnpm/*"]' --output-file=ThirdPartyLicenses.txt
