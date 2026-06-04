@@ -11,10 +11,6 @@ package:
 source:
   url: https://github.com/${{ name }}/${{ name }}/archive/refs/tags/v${{ version }}.tar.gz
   sha256: e51d82a4fe2d7db2e1704d32d3d132670cf921d9bf127a1bfb500bf8d4f93c43
-
-build:
-  number: 0
-
 requirements:
   build:
     - ${{ compiler('c') }}
@@ -35,6 +31,21 @@ requirements:
 tests:
   - script:
       - pnpm --help
+  - package_contents:
+      bin:
+        - if: unix
+          then:
+            - pn
+            - pnpx
+            - pnx
+        - pnpm
+      files:
+        - if: unix
+          then:
+            - lib/node_modules/pnpm/*
+          else:
+            - Library/share/pnpm/*
+      strict: true
 
 about:
   license: MIT
