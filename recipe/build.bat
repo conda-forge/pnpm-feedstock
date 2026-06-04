@@ -23,8 +23,8 @@ if errorlevel 1 exit 1
 sed -i "/^nodeVersion/d" pnpm-workspace.yaml
 if errorlevel 1 exit 1
 
-@echo "## Installing prod dependencies"
-cmd /c npx pnpm@%PKG_VERSION% install --prod
+@echo "## Installing dependencies"
+cmd /c npx pnpm@%PKG_VERSION% install
 if errorlevel 1 exit 1
 
 @echo "## Generating ThirdPartyLicenses.txt"
