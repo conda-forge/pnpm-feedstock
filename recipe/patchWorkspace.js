@@ -51,7 +51,6 @@ const updatedPnpmWorkspace = pnpmWorkspace
   .replace(/^enableGlobalVirtualStore: true/gm, 'enableGlobalVirtualStore: false')
   .replace(/^nodeVersion:/gm, 'RENAMED_nodeVersion:')
   .replace(/^allowBuilds:/gm, 'RENAMED_allowBuilds:')
-  .replace(/^configDependencies:/gm, 'RENAMED_configDependencies:')
 
 console.log('deleted `patchedDependencies` from pnpm-workspace.yaml')
 console.log('deleted `enableGlobalVirtualStore` from pnpm-workspace.yaml')
