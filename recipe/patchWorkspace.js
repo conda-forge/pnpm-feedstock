@@ -46,12 +46,12 @@ console.log('deleted `scripts.prepare` from package.json')
 
 // Debugging this is a bit easier if the script is idempotent, therefore using regexes which
 // have to start at the beginning of the line to avoid RENAMED_RENAMED_RENAMED_.. entries
-updatedPnpmWorkspace = pnpmWorkspace
-  .replace(/^patchedDependencies:/, 'RENAMED_patchedDependencies:')
-  .replace(/^enableGlobalVirtualStore: true/, 'enableGlobalVirtualStore: false')
-  .replace(/^nodeVersion:/, 'RENAMED_nodeVersion:')
-  .replace(/^allowBuilds:/, 'RENAMED_allowBuilds:')
-  .replace(/^configDependencies:/, 'RENAMED_configDependencies:')
+const updatedPnpmWorkspace = pnpmWorkspace
+  .replace(/^patchedDependencies:/gm, 'RENAMED_patchedDependencies:')
+  .replace(/^enableGlobalVirtualStore: true/gm, 'enableGlobalVirtualStore: false')
+  .replace(/^nodeVersion:/gm, 'RENAMED_nodeVersion:')
+  .replace(/^allowBuilds:/gm, 'RENAMED_allowBuilds:')
+  .replace(/^configDependencies:/gm, 'RENAMED_configDependencies:')
 
 console.log('deleted `patchedDependencies` from pnpm-workspace.yaml')
 console.log('deleted `enableGlobalVirtualStore` from pnpm-workspace.yaml')
@@ -59,6 +59,6 @@ console.log('deleted `nodeVersion` from pnpm-workspace.yaml')
 console.log('deleted `allowBuilds` from pnpm-workspace.yaml')
 
 
-fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2) + '\n')
-fs.writeFileSync('pnpm-workspace.yaml', updatedPnpmWorkspace)
+fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2) + '\n', 'utf-8')
+fs.writeFileSync('./pnpm-workspace.yaml', updatedPnpmWorkspace, 'utf-8')
 console.log('wrote patched package.json and pnpm-workspace.yaml to disk')
