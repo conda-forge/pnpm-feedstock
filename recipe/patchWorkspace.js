@@ -21,14 +21,6 @@ console.log('deleted `packageManager` from package.json')
 delete packageJson.devEngines
 console.log('deleted `devEngines` from package.json')
 
-// delete both optionalDependencies and devDependencies of workspace root as these cause
-// issues with running `pnpm install` and are not needed for the final license output.
-delete packageJson.optionalDependencies
-console.log('deleted `optionalDependencies` from package.json')
-
-delete packageJson.devDependencies
-console.log('deleted `devDependencies` from package.json')
-
 // We don't want to run any custom commands upon installation
 delete packageJson.scripts.prepare
 console.log('deleted `scripts.prepare` from package.json')
