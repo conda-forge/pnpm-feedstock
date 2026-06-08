@@ -60,6 +60,7 @@ console.log('deleted `patchedDependencies` from pnpm-workspace.yaml')
 console.log('deleted `enableGlobalVirtualStore` from pnpm-workspace.yaml')
 console.log('deleted `nodeVersion` from pnpm-workspace.yaml')
 console.log('deleted `allowBuilds` from pnpm-workspace.yaml')
+console.log('deleted `configDependencies` from pnpm-workspace.yaml')
 
 
 fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2) + '\n', 'utf-8')
