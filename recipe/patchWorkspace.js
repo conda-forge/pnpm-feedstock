@@ -44,6 +44,9 @@ console.log('deleted `scripts.prepare` from package.json')
 //    something to fail in the install process. As we don't intend to build pnpm here we can
 //    just skip these and not deal with cross-platform issues that are likely hard to debug.
 
+// 5. Disable `configDependencies` as well, because with this option pnpm tries to use their
+//    new rust based port of parts of pnpm, which fails.
+
 // Debugging this is a bit easier if the script is idempotent, therefore using regexes which
 // have to start at the beginning of the line to avoid RENAMED_RENAMED_RENAMED_.. entries
 const updatedPnpmWorkspace = pnpmWorkspace
@@ -51,6 +54,7 @@ const updatedPnpmWorkspace = pnpmWorkspace
   .replace(/^enableGlobalVirtualStore: true/gm, 'enableGlobalVirtualStore: false')
   .replace(/^nodeVersion:/gm, 'RENAMED_nodeVersion:')
   .replace(/^allowBuilds:/gm, 'RENAMED_allowBuilds:')
+  .replace(/^configDependencies:/gm, 'RENAMED_configDependencies:')
 
 console.log('deleted `patchedDependencies` from pnpm-workspace.yaml')
 console.log('deleted `enableGlobalVirtualStore` from pnpm-workspace.yaml')
