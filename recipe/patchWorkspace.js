@@ -1,17 +1,17 @@
 // Patch package.json and pnpm-workspace.yaml to make `pnpm licenses list` work.
 // This is needed as pnpm is a rather complex package with lots of custom parts,
-// which don't all play nicely with some pnpm features itself or which cause
-// unnecessary complications and differences per platform.
+// which don't all play nicely with some pnpm features itself or which cause unnecessary
+// complications and differences per platform.
 
 const fs = require('fs')
 const packageJson = JSON.parse(fs.readFileSync('./package.json'))
 const pnpmWorkspace = fs.readFileSync('./pnpm-workspace.yaml', 'utf-8')
 console.log('patching package.json and pnpm-workspace.yaml')
 
-// This is typically one version behind the version we are trying to install
-// as it is a sort of "bootstrapping" process to use a package manager to
-// build a package manager. We want to ignore this as we just need to install
-// the prod dependencies to then create a third-party-licenses file
+// This is typically one version behind the version we are trying to install as it is a sort
+// of "bootstrapping" process to use a package manager to build a package manager. We want
+// to ignore this as we just need to install the prod dependencies to then create a
+// third-party-licenses file
 delete packageJson.packageManager
 console.log('deleted `packageManager` from package.json')
 
@@ -26,15 +26,15 @@ delete packageJson.scripts.prepare
 console.log('deleted `scripts.prepare` from package.json')
 
 // 1. We need to delete `patchedDependencies`.
-//    pnpm switched from having their own patched dependencies in the package.json
-//    file to having them in the pnpm-workspace.yaml file, which means that we
-//    cannot simply JSON.parse it and we don't want to deal with having a dependency
-//    for parsing yaml around. The easiest solution to "delete" the patchedDependencies
-//    entry is to simply rename it. The same applies for other multiline entries as well.
+//    pnpm switched from having their own patched dependencies in the package.json file to
+//    having them in the pnpm-workspace.yaml file, which means that we cannot simply JSON.parse
+//    it and we don't want to deal with having a dependency for parsing yaml around.
+//    The easiest solution to "delete" the patchedDependencies entry is to simply rename it.
+//    The same applies for other multiline entries as well.
 
-// 2. Additionally we also need to disable the global virtual store as using this has
-//    buggy behavior combined with `pnpm licenses list`. The command still outputs the
-//    same paths, which do not exist when using `enableGlobalVirtualStore: true`.
+// 2. Additionally we also need to disable the global virtual store as using this has buggy
+//    behavior combined with `pnpm licenses list`. The command still outputs the same paths,
+//    which do not exist when using `enableGlobalVirtualStore: true`.
 
 // 3. Also remove `nodeVersion`.
 //    This check is not needed here as conda-forge will ensure correct dependency versions

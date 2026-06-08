@@ -29,7 +29,7 @@ node %RECIPE_DIR%\patchWorkspace.js
 if errorlevel 1 exit 1
 
 @echo "## Installing prod dependencies"
-cmd /c npx pnpm@%PKG_VERSION% install --prod
+cmd /c npx pnpm@%PKG_VERSION% install --prod --no-optional
 if errorlevel 1 exit 1
 
 @echo "## Generating ThirdPartyLicenses.txt"
