@@ -31,7 +31,7 @@ rm pnpm-lock.yaml
 rm -rf pnpm/artifacts/exe
 node $RECIPE_DIR/patchWorkspace.js
 
-npx pnpm@${PKG_VERSION} install --prod --no-optional
+npx pnpm@${PKG_VERSION} install --prod
 
 # generate the thirdPartyLicenses file using @quantco/pnpm-licenses
 npx pnpm@${PKG_VERSION} licenses list --prod --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input --filter='["@pnpm/*"]' --output-file=ThirdPartyLicenses.txt
