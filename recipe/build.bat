@@ -21,6 +21,8 @@ popd
 @REM everything that follows is related to generating the third party licenses.
 @REM for this install dependencies, patch things and then generate license file from there.
 
+rmdir .meta-updater /s /q
+if errorlevel 1 exit 1
 rmdir pnpm\artifacts\exe /s /q
 if errorlevel 1 exit 1
 del pnpm-lock.yaml
