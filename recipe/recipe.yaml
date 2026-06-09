@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: pnpm
-  version: "11.5.1"
+  version: "11.5.2"
 
 package:
   name: ${{ name|lower }}
@@ -10,7 +10,7 @@ package:
 
 source:
   url: https://github.com/${{ name }}/${{ name }}/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: e51d82a4fe2d7db2e1704d32d3d132670cf921d9bf127a1bfb500bf8d4f93c43
+  sha256: 60ee08aee9d8bd974a3eefbe0ba1720e961cd515271ab4b2d9c6f028e7908199
 
 build:
   number: 0
