@@ -20,12 +20,15 @@ requirements:
     - ${{ compiler('c') }}
     - ${{ stdlib("c") }}
     - ${{ compiler('cxx') }}
-    - make
+    - if: target_platform != "win-arm64"
+      then:
+        - make
     - nodejs
-    - if: win
+    - if: win and target_platform != "win-arm64"
       then:
         - m2-sed
-      else:
+    - if: not win
+      then:
         - sed
   host:
     - nodejs
@@ -35,6 +38,10 @@ requirements:
 tests:
   - script:
       - pnpm --help
+      - if: target_platform == "win-arm64"
+        then:
+          - pnpm --version
+          - node -e "const actual = process.platform + '/' + process.arch; console.log(actual); if (actual !== 'win32/arm64') process.exit(1)"
   - package_contents:
       bin:
         - if: unix
