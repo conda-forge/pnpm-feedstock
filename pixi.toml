@@ -73,6 +73,24 @@ description = "Debug pnpm-feedstock with variant linux_aarch64_nodejs26 directly
 [feature.build.tasks."inspect-linux_aarch64_nodejs26"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_aarch64_nodejs26.yaml"
 description = "List contents of pnpm-feedstock packages built for variant linux_aarch64_nodejs26"
+[feature.build.tasks."build-linux_riscv64_nodejs24"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/linux_riscv64_nodejs24.yaml --target-platform linux-riscv64"
+description = "Build pnpm-feedstock with variant linux_riscv64_nodejs24 directly (without setup scripts)"
+[feature.build.tasks."debug-linux_riscv64_nodejs24"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_riscv64_nodejs24.yaml --target-platform linux-riscv64"
+description = "Debug pnpm-feedstock with variant linux_riscv64_nodejs24 directly (without setup scripts)"
+[feature.build.tasks."inspect-linux_riscv64_nodejs24"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_riscv64_nodejs24.yaml"
+description = "List contents of pnpm-feedstock packages built for variant linux_riscv64_nodejs24"
+[feature.build.tasks."build-linux_riscv64_nodejs26"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/linux_riscv64_nodejs26.yaml --target-platform linux-riscv64"
+description = "Build pnpm-feedstock with variant linux_riscv64_nodejs26 directly (without setup scripts)"
+[feature.build.tasks."debug-linux_riscv64_nodejs26"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_riscv64_nodejs26.yaml --target-platform linux-riscv64"
+description = "Debug pnpm-feedstock with variant linux_riscv64_nodejs26 directly (without setup scripts)"
+[feature.build.tasks."inspect-linux_riscv64_nodejs26"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_riscv64_nodejs26.yaml"
+description = "List contents of pnpm-feedstock packages built for variant linux_riscv64_nodejs26"
 [feature.build.tasks."build-osx_64_nodejs24"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_64_nodejs24.yaml --target-platform osx-64"
 description = "Build pnpm-feedstock with variant osx_64_nodejs24 directly (without setup scripts)"

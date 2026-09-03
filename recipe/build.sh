@@ -40,6 +40,7 @@ npx pnpm@${PKG_VERSION} licenses list --prod --json | npx @quantco/pnpm-licenses
 case "${target_platform}" in
     linux-64) pnpm_exe_arch_pattern="x86-64" ;;
     linux-aarch64) pnpm_exe_arch_pattern="aarch64" ;;
+    linux-riscv64) pnpm_exe_arch_pattern="riscv64" ;;
     osx-64) pnpm_exe_arch_pattern="x86_64" ;;
     osx-arm64) pnpm_exe_arch_pattern="arm64" ;;
     *)
