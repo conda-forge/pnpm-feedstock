@@ -13,7 +13,7 @@ source:
   sha256: 24984620f95e2236a5d60ddbaeaad6dc54663e27eee8b29ffa24f13dd8fe16de
 
 build:
-  number: 0
+  number: 2
 
 requirements:
   build:
@@ -24,6 +24,9 @@ requirements:
       then:
         - make
     - nodejs
+    - if: not win
+      then:
+        - file
     - if: win and target_platform != "win-arm64"
       then:
         - m2-sed

@@ -2,9 +2,6 @@
 
 set -exuo pipefail
 
-if [[ "${target_platform}" == "osx-arm64" ]]; then
-    export npm_config_arch="arm64"
-fi
 # Don't use pre-built gyp packages
 export npm_config_build_from_source=true
 
@@ -35,3 +32,25 @@ npx pnpm@${PKG_VERSION} install --ignore-scripts
 
 # generate the thirdPartyLicenses file using @quantco/pnpm-licenses
 npx pnpm@${PKG_VERSION} licenses list --prod --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input --filter='["@pnpm/*"]' --output-file=ThirdPartyLicenses.txt
+
+# Regression guard for #237: pnpm's preinstall script picks its native binary
+# via process.arch/process.platform, so a build/target platform mismatch
+# would silently ship the wrong architecture. All targets build natively now,
+# so this should never trip -- it's here to fail loudly if that ever changes.
+case "${target_platform}" in
+    linux-64) pnpm_exe_arch_pattern="x86-64" ;;
+    linux-aarch64) pnpm_exe_arch_pattern="aarch64" ;;
+    osx-64) pnpm_exe_arch_pattern="x86_64" ;;
+    osx-arm64) pnpm_exe_arch_pattern="arm64" ;;
+    *)
+        echo "Don't know the expected pnpm binary architecture for target_platform=${target_platform}" >&2
+        exit 1
+        ;;
+esac
+
+pnpm_binary="$PREFIX/lib/node_modules/pnpm/pnpm"
+file "${pnpm_binary}" | grep -q "${pnpm_exe_arch_pattern}" || {
+    echo "pnpm binary architecture does not match target_platform=${target_platform}:" >&2
+    file "${pnpm_binary}" >&2
+    exit 1
+}
