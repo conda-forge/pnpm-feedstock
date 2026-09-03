@@ -33,53 +33,24 @@ npx pnpm@${PKG_VERSION} install --ignore-scripts
 # generate the thirdPartyLicenses file using @quantco/pnpm-licenses
 npx pnpm@${PKG_VERSION} licenses list --prod --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input --filter='["@pnpm/*"]' --output-file=ThirdPartyLicenses.txt
 
-# Regression fix for #237: select and place the target-platform native binary
-# ourselves instead of relying on pnpm's preinstall auto-detection (it picks
-# the build platform's binary when cross-compiling). This has to happen last:
-# the npx invocations above need to actually run pnpm on the build machine,
-# which no longer works once this places a target-platform binary here.
+# Regression guard for #237: pnpm's preinstall script picks its native binary
+# via process.arch/process.platform, so a build/target platform mismatch
+# would silently ship the wrong architecture. All targets build natively now,
+# so this should never trip -- it's here to fail loudly if that ever changes.
 case "${target_platform}" in
-    linux-64)
-        pnpm_exe_pkg="@pnpm/exe.linux-x64"
-        pnpm_exe_arch_pattern="x86-64"
-        ;;
-    linux-aarch64)
-        pnpm_exe_pkg="@pnpm/exe.linux-arm64"
-        pnpm_exe_arch_pattern="aarch64"
-        ;;
-    osx-64)
-        pnpm_exe_pkg="@pnpm/exe.darwin-x64"
-        pnpm_exe_arch_pattern="x86_64"
-        ;;
-    osx-arm64)
-        pnpm_exe_pkg="@pnpm/exe.darwin-arm64"
-        pnpm_exe_arch_pattern="arm64"
-        ;;
+    linux-64) pnpm_exe_arch_pattern="x86-64" ;;
+    linux-aarch64) pnpm_exe_arch_pattern="aarch64" ;;
+    osx-64) pnpm_exe_arch_pattern="x86_64" ;;
+    osx-arm64) pnpm_exe_arch_pattern="arm64" ;;
     *)
-        echo "Don't know which pnpm native-binary package ships ${target_platform}" >&2
+        echo "Don't know the expected pnpm binary architecture for target_platform=${target_platform}" >&2
         exit 1
         ;;
 esac
 
-pnpm_module_dir="$PREFIX/lib/node_modules/pnpm"
-
-# fetch just the native-binary package for target_platform and place its
-# binary where pnpm expects to find it, then drop the build-platform
-# native-binary packages npm downloaded as optional dependencies -- they are
-# never used and only take up space.
-# npm pack runs in local project context (unlike npm install -g), so it is
-# done from a scratch directory rather than relying on devEngines.packageManager
-# having already been stripped from $SRC_DIR/package.json above -- run there
-# it would hit EBADDEVENGINES.
-pnpm_exe_scratch=$(mktemp -d)
-pnpm_exe_tarball="${pnpm_exe_scratch}/$(cd "${pnpm_exe_scratch}" && npm pack --silent --ignore-scripts "${pnpm_exe_pkg}@${PKG_VERSION}")"
-tar -xzf "${pnpm_exe_tarball}" -O package/pnpm > "${pnpm_module_dir}/pnpm"
-chmod 0755 "${pnpm_module_dir}/pnpm"
-rm -rf "${pnpm_exe_scratch}"
-rm -rf "${pnpm_module_dir}/node_modules/@pnpm"
-
-file "${pnpm_module_dir}/pnpm" | grep -q "${pnpm_exe_arch_pattern}" || {
+pnpm_binary="$PREFIX/lib/node_modules/pnpm/pnpm"
+file "${pnpm_binary}" | grep -q "${pnpm_exe_arch_pattern}" || {
     echo "pnpm binary architecture does not match target_platform=${target_platform}:" >&2
-    file "${pnpm_module_dir}/pnpm" >&2
+    file "${pnpm_binary}" >&2
     exit 1
 }
