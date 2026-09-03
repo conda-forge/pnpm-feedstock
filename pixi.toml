@@ -9,7 +9,7 @@ version = "2026.9.1"  # conda-smithy version used to generate this file
 description = "Pixi configuration for conda-forge/pnpm-feedstock"
 authors = ["@conda-forge/pnpm"]
 channels = ["conda-forge"]
-platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64", "win-64"]
+platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64", "win-64", "win-arm64"]
 requires-pixi = ">=0.59.0"
 
 [tasks.build-locally]
@@ -127,6 +127,24 @@ description = "Debug pnpm-feedstock with variant win_64_nodejs26 directly (witho
 [feature.build.tasks."inspect-win_64_nodejs26"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/win_64_nodejs26.yaml"
 description = "List contents of pnpm-feedstock packages built for variant win_64_nodejs26"
+[feature.build.tasks."build-win_arm64_nodejs24"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/win_arm64_nodejs24.yaml --target-platform win-arm64"
+description = "Build pnpm-feedstock with variant win_arm64_nodejs24 directly (without setup scripts)"
+[feature.build.tasks."debug-win_arm64_nodejs24"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/win_arm64_nodejs24.yaml --target-platform win-arm64"
+description = "Debug pnpm-feedstock with variant win_arm64_nodejs24 directly (without setup scripts)"
+[feature.build.tasks."inspect-win_arm64_nodejs24"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/win_arm64_nodejs24.yaml"
+description = "List contents of pnpm-feedstock packages built for variant win_arm64_nodejs24"
+[feature.build.tasks."build-win_arm64_nodejs26"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/win_arm64_nodejs26.yaml --target-platform win-arm64"
+description = "Build pnpm-feedstock with variant win_arm64_nodejs26 directly (without setup scripts)"
+[feature.build.tasks."debug-win_arm64_nodejs26"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/win_arm64_nodejs26.yaml --target-platform win-arm64"
+description = "Debug pnpm-feedstock with variant win_arm64_nodejs26 directly (without setup scripts)"
+[feature.build.tasks."inspect-win_arm64_nodejs26"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/win_arm64_nodejs26.yaml"
+description = "List contents of pnpm-feedstock packages built for variant win_arm64_nodejs26"
 
 [environments]
 build = ["build"]

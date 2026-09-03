@@ -13,20 +13,25 @@ source:
   sha256: 24984620f95e2236a5d60ddbaeaad6dc54663e27eee8b29ffa24f13dd8fe16de
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
     - ${{ compiler('c') }}
     - ${{ stdlib("c") }}
     - ${{ compiler('cxx') }}
-    - make
+    - if: target_platform != "win-arm64"
+      then:
+        - make
     - nodejs
-    - file
-    - if: win
+    - if: not win
+      then:
+        - file
+    - if: win and target_platform != "win-arm64"
       then:
         - m2-sed
-      else:
+    - if: not win
+      then:
         - sed
   host:
     - nodejs
@@ -36,6 +41,10 @@ requirements:
 tests:
   - script:
       - pnpm --help
+      - if: target_platform == "win-arm64"
+        then:
+          - pnpm --version
+          - node -e "const actual = process.platform + '/' + process.arch; console.log(actual); if (actual !== 'win32/arm64') process.exit(1)"
   - package_contents:
       bin:
         - if: unix
