@@ -16,6 +16,23 @@ export CI=false
 
 NPM_CONFIG_USERCONFIG=/tmp/nonexistentrc
 
+# pnpm uses pnpm as its package manager, which is kind of awkward to deal with sometimes
+
+# as pnpm is quite a complex project there are some oddities to deal with prior to installing dependencies
+# and generating the third party licenses from there. Patching done using patchWorkspace.js and explained there.
+
+rm pnpm-lock.yaml
+rm -rf pnpm/artifacts/exe
+node $RECIPE_DIR/patchWorkspace.js
+
+# This runs on the build machine, so it has to happen before we install the
+# target platform's pnpm into $PREFIX/bin -- otherwise npx would pick that one
+# up from PATH and, when cross-compiling, fail to execute it.
+npx pnpm@${PKG_VERSION} install --ignore-scripts
+
+# generate the thirdPartyLicenses file using @quantco/pnpm-licenses
+npx pnpm@${PKG_VERSION} licenses list --prod --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input --filter='["@pnpm/*"]' --output-file=ThirdPartyLicenses.txt
+
 # pnpm ships one native binary per platform as an optional dependency
 # (`@pnpm/exe.<os>-<cpu>`), and its install script links the one matching the
 # *host* (process.platform/process.arch) over the placeholder `pnpm` bin. That
@@ -59,20 +76,6 @@ fi
 
 cp "${pnpm_native_binary}" "${pnpm_dir}/pnpm"
 chmod 755 "${pnpm_dir}/pnpm"
-
-# pnpm uses pnpm as its package manager, which is kind of awkward to deal with sometimes
-
-# as pnpm is quite a complex project there are some oddities to deal with prior to installing dependencies
-# and generating the third party licenses from there. Patching done using patchWorkspace.js and explained there.
-
-rm pnpm-lock.yaml
-rm -rf pnpm/artifacts/exe
-node $RECIPE_DIR/patchWorkspace.js
-
-npx pnpm@${PKG_VERSION} install --ignore-scripts
-
-# generate the thirdPartyLicenses file using @quantco/pnpm-licenses
-npx pnpm@${PKG_VERSION} licenses list --prod --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input --filter='["@pnpm/*"]' --output-file=ThirdPartyLicenses.txt
 
 # Regression guard for #237: fail loudly if the binary we shipped above is not
 # actually the one for target_platform.
