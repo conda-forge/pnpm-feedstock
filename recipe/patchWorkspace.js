@@ -51,15 +51,20 @@ console.log('deleted `scripts.prepare` from package.json')
 //    which requires a Rust toolchain (`cargo metadata`) and git checkouts of
 //    Cargo git dependencies. Neither is needed to collect the npm licenses.
 
+// 7. Since v12.17 pnpm moves some of these settings (e.g. `patchedDependencies`, `allowBuilds`)
+//    out of pnpm-workspace.yaml into separate files referenced by its top-level `include:` map.
+//    pnpm rejects keys in an included file that are not delegated to it, so renaming them there
+//    does not work. Instead the whole top-level block is removed from included files.
+
+const disabledSettings = ['patchedDependencies', 'nodeVersion', 'allowBuilds', 'configDependencies', 'cargo']
+
 // Debugging this is a bit easier if the script is idempotent, therefore using regexes which
 // have to start at the beginning of the line to avoid RENAMED_RENAMED_RENAMED_.. entries
-const updatedPnpmWorkspace = pnpmWorkspace
-  .replace(/^patchedDependencies:/gm, 'RENAMED_patchedDependencies:')
+let updatedPnpmWorkspace = pnpmWorkspace
   .replace(/^enableGlobalVirtualStore: true/gm, 'enableGlobalVirtualStore: false')
-  .replace(/^nodeVersion:/gm, 'RENAMED_nodeVersion:')
-  .replace(/^allowBuilds:/gm, 'RENAMED_allowBuilds:')
-  .replace(/^configDependencies:/gm, 'RENAMED_configDependencies:')
-  .replace(/^cargo:/gm, 'RENAMED_cargo:')
+for (const setting of disabledSettings) {
+  updatedPnpmWorkspace = updatedPnpmWorkspace.replace(new RegExp(`^${setting}:`, 'gm'), `RENAMED_${setting}:`)
+}
 
 console.log('deleted `patchedDependencies` from pnpm-workspace.yaml')
 console.log('deleted `enableGlobalVirtualStore` from pnpm-workspace.yaml')
@@ -68,6 +73,32 @@ console.log('deleted `allowBuilds` from pnpm-workspace.yaml')
 console.log('deleted `configDependencies` from pnpm-workspace.yaml')
 console.log('deleted `cargo` from pnpm-workspace.yaml')
 
+// Collect the file paths listed as keys of the top-level `include:` block, e.g.
+// include:
+//   ./.config/pnpm/patches/patches.yaml:
+//     - patchedDependencies
+const includeBlock = pnpmWorkspace.match(/^include:[^\S\n]*\n((?:[ \t]+.*\n|[^\S\n]*\n)*)/m)
+const includedFiles = includeBlock
+  ? [...includeBlock[1].matchAll(/^ {2}['"]?([^'"\s#][^'"\n]*?)['"]?:[^\S\n]*$/gm)].map((m) => m[1])
+  : []
+
+for (const includedFile of includedFiles) {
+  if (!fs.existsSync(includedFile)) {
+    console.log(`included file ${includedFile} does not exist, skipping`)
+    continue
+  }
+  const content = fs.readFileSync(includedFile, 'utf-8')
+  let updatedContent = content
+    .replace(/^enableGlobalVirtualStore: true/gm, 'enableGlobalVirtualStore: false')
+  for (const setting of disabledSettings) {
+    // A top-level block is the `key:` line plus all following indented or blank lines
+    updatedContent = updatedContent.replace(new RegExp(`^${setting}:.*(?:\\n(?:[ \\t].*|[ \\t]*$))*\\n?`, 'gm'), '')
+  }
+  if (updatedContent !== content) {
+    fs.writeFileSync(includedFile, updatedContent, 'utf-8')
+    console.log(`patched included file ${includedFile}`)
+  }
+}
 
 fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2) + '\n', 'utf-8')
 fs.writeFileSync('./pnpm-workspace.yaml', updatedPnpmWorkspace, 'utf-8')
