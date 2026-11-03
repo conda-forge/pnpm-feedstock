@@ -47,6 +47,10 @@ console.log('deleted `scripts.prepare` from package.json')
 // 5. Disable `configDependencies` as well, because with this option pnpm tries to use their
 //    new rust based port of parts of pnpm, which fails.
 
+// 6. Disable `cargo` too. Since v12.5 pnpm manages its own Rust crates (Cargo deps)
+//    which requires a Rust toolchain (`cargo metadata`) and git checkouts of
+//    Cargo git dependencies. Neither is needed to collect the npm licenses.
+
 // Debugging this is a bit easier if the script is idempotent, therefore using regexes which
 // have to start at the beginning of the line to avoid RENAMED_RENAMED_RENAMED_.. entries
 const updatedPnpmWorkspace = pnpmWorkspace
@@ -55,12 +59,14 @@ const updatedPnpmWorkspace = pnpmWorkspace
   .replace(/^nodeVersion:/gm, 'RENAMED_nodeVersion:')
   .replace(/^allowBuilds:/gm, 'RENAMED_allowBuilds:')
   .replace(/^configDependencies:/gm, 'RENAMED_configDependencies:')
+  .replace(/^cargo:/gm, 'RENAMED_cargo:')
 
 console.log('deleted `patchedDependencies` from pnpm-workspace.yaml')
 console.log('deleted `enableGlobalVirtualStore` from pnpm-workspace.yaml')
 console.log('deleted `nodeVersion` from pnpm-workspace.yaml')
 console.log('deleted `allowBuilds` from pnpm-workspace.yaml')
 console.log('deleted `configDependencies` from pnpm-workspace.yaml')
+console.log('deleted `cargo` from pnpm-workspace.yaml')
 
 
 fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2) + '\n', 'utf-8')

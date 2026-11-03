@@ -31,7 +31,7 @@ node $RECIPE_DIR/patchWorkspace.js
 npx pnpm@${PKG_VERSION} install --ignore-scripts
 
 # generate the thirdPartyLicenses file using @quantco/pnpm-licenses
-npx pnpm@${PKG_VERSION} licenses list --prod --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input --filter='["@pnpm/*"]' --output-file=ThirdPartyLicenses.txt
+npx pnpm@${PKG_VERSION} licenses list --recursive --prod --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input --filter='["@pnpm/*"]' --output-file=ThirdPartyLicenses.txt
 
 # pnpm ships one native binary per platform as an optional dependency
 # (`@pnpm/exe.<os>-<cpu>`), and its install script links the one matching the

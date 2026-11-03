@@ -35,5 +35,5 @@ cmd /c npx pnpm@%PKG_VERSION% install --ignore-scripts
 if errorlevel 1 exit 1
 
 @echo "## Generating ThirdPartyLicenses.txt"
-cmd /c npx pnpm@%PKG_VERSION% licenses list --prod --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input "--filter=["""@pnpm/*"""]" --output-file=ThirdPartyLicenses.txt
+cmd /c npx pnpm@%PKG_VERSION% licenses list --recursive --prod --json | npx @quantco/pnpm-licenses generate-disclaimer --json-input "--filter=["""@pnpm/*"""]" --output-file=ThirdPartyLicenses.txt
 if errorlevel 1 exit 1
